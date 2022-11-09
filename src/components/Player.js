@@ -2,13 +2,17 @@ import { useSphere } from "@react-three/cannon"
 import { useFrame, useThree } from "@react-three/fiber"
 import { useEffect, useRef } from "react"
 import { Vector3 } from "three"
+import { useKeyboard } from "../hooks/useKeyboard"
 
 export const Player = () => {
+    const actions = useKeyboard()
+    console.log('actions', Object.entries(actions).filter(([k, v]) => v))
+
     const { camera } = useThree()
     const [ref, api] = useSphere(() => ({
         mass: 1,
         type: 'Dynamic',
-        position: [0, 1, 0]
+        position: [0, 2, 0]
     }))
 
     const velocity = useRef([0, 0, 0])
@@ -24,7 +28,7 @@ export const Player = () => {
     useFrame(() => {
         camera.position.copy(
             new Vector3(position.current[0], position.current[1], position.current[2]))
-        api.velocity.set()
+        api.velocity.set(0, 0, 0)
     })
 
     return (
