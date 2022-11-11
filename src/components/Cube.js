@@ -9,15 +9,17 @@ export const Cube = ({ position, texture }) => {
     }))
 
     const [addCube, removeCube] = useStore((state) => [state.addCube, state.removeCube])
-
     const activeTexture = textures[texture + 'Texture']
 
     return (
         <mesh
             onClick={(e) => {
+
                 e.stopPropagation()
+
                 const clickedFace = Math.floor(e.faceIndex / 2)
                 const { x, y, z } = ref.current.position
+
                 if (e.altKey) {
                     removeCube(x, y, z)
                     return
@@ -48,7 +50,9 @@ export const Cube = ({ position, texture }) => {
                 }
             }}
             ref={ref}>
+
             <boxBufferGeometry attach="geometry" />
+
             <meshStandardMaterial map={activeTexture} attach="material" />
         </mesh>
     )
